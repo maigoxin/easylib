@@ -1,0 +1,30 @@
+{
+    "name": "maigoxin/easylib",
+    "description": "easylib for self",
+    "type": "library",
+    "homepage": "https://github.com/maigoxin/easylib",
+    "keywords": [
+        "maigoxin",
+        "huangxin"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Huang Xin",
+            "email": "maigoxin@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "apache/log4php":"2.3.*",
+        "oscarotero/psr7-middlewares":"~v3.16",
+        "catfan/Medoo": "^1.1",
+        "guzzlehttp/guzzle":"~6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "EasyLib\\": "src/",
+            "Test\\": "tests/"
+        }
+    }
+}
