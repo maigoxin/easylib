@@ -3,33 +3,18 @@
  * creator: maigohuang
  * */
 namespace EasyLib;
-use App\Config\Redis as ConfigRedis;
-
 class RedisClient 
 {
-    private static $redis_client_;
     private $redis_;
 
-    private function __construct($redis_group) 
+    private function __construct($config) 
     {
-        $config = ConfigRedis::get(ENV)[$redis_group];
-
-        if ($config == null) return ;
-
         $this->redis_ = new \Redis();
         $this->redis_->connect($config['host'], $config['port'], $config['timeout']);
 
         if (isset($config['db'])) {
             $this->redis_->select($config['db']);
         }
-    }
-
-    public static function getInstance($redis_group) 
-    {
-        if (!isset(self::$redis_client_[$redis_group])) {
-            self::$redis_client_[$redis_group] = new RedisClient($redis_group);
-        }
-        return self::$redis_client_[$redis_group];
     }
 
     private function __clone() {
