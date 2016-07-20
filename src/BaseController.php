@@ -14,7 +14,6 @@ use Interop\Container\ContainerInterface;
  * 解决依赖注入问题，从Controller中可以直接访问所有Service
  * 
  * Class BaseController
- * @package App\Controller
  */
 class BaseController
 {
