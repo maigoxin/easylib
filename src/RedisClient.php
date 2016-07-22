@@ -7,7 +7,7 @@ class RedisClient
 {
     private $redis_;
 
-    private function __construct($config) 
+    public function __construct($config) 
     {
         $this->redis_ = new \Redis();
         $this->redis_->connect($config['host'], $config['port'], $config['timeout']);
