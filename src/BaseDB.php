@@ -13,6 +13,10 @@ class BaseDB
     
     public function __construct($config)
     {
+        $config = array_merge([
+            'charset' => 'utf8',
+            ], $config);
+
         $this->_medoo = new \medoo($config);
     }
 
