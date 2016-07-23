@@ -9,7 +9,7 @@ class ApiView
 {
     private $response = null;
 
-    protected static $errorMap = [
+    protected $errorMap = [
         'Undefinition' => [-1000, '未定义错误', 500], //error_code, error_message_format, http_code
     ];
 
@@ -18,10 +18,10 @@ class ApiView
         $args = func_get_args();
         $error = $args[0];
 
-        if (isset(self::$errorMap[$error])) {
-            $data = self::$errorMap[$error];
+        if (isset($this->errorMap[$error])) {
+            $data = $this->errorMap[$error];
         }else {
-            $data = self::$errorMap['Undefinition'];
+            $data = $this->errorMap['Undefinition'];
         }
 
         $args[0] = $data[1];
