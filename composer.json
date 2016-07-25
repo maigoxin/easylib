@@ -19,7 +19,6 @@
         "apache/log4php":"2.3.*",
         "oscarotero/psr7-middlewares":"~v3.16",
         "catfan/Medoo": "^1.1",
-        "vrana/notorm": "@dev",
         "guzzlehttp/guzzle":"~6.2"
     },
     "autoload": {
