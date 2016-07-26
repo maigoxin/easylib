@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=5.5",
-        "apache/log4php":"2.3.*",
+        "maigoxin/log4php":"v0.01",
         "oscarotero/psr7-middlewares":"~v3.16",
         "catfan/Medoo": "^1.1",
         "guzzlehttp/guzzle":"~6.2"
