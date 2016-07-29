@@ -26,8 +26,8 @@ class ApiView
 
         $args[0] = $data[1];
         $message = [
-            'error_code' => $data[0],
-            'error_message' => call_user_func_array('sprintf', $args),
+            'errno' => $data[0],
+            'errmsg' => call_user_func_array('sprintf', $args),
         ];
         return $this->render($message, $data[2]);
     }
