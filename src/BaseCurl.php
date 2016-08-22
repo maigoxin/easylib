@@ -72,7 +72,7 @@ abstract class BaseCurl extends Singleton
         }
 
         foreach ($c3 as $k=>$v) {
-            if (is_array($result[$k]) && is_array($v)) {
+            if (isset($result[$k]) && is_array($result[$k]) && is_array($v)) {
                 $result[$k] = array_merge($result[$k], $v);
             }else {
                 $result[$k] = $v;
