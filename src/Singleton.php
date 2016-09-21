@@ -17,10 +17,12 @@ class Singleton
     public static function getInstance()
     {
         $cls = get_called_class();
-        if (!isset(self::$instances[$cls]))
+        $extend = implode('^_^', func_get_args());
+        if (!isset(self::$instances[$cls.$extend]))
         {
-            self::$instances[$cls] = new static;
+            $rcStatic=new ReflectionClass($cls);
+            self::$instances[$cls.$extend] = $rcStatic->newInstanceArgs(func_get_args());
         }
-        return self::$instances[$cls];
+        return self::$instances[$cls.$extend];
     }
 }
