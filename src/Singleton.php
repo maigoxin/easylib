@@ -20,7 +20,7 @@ class Singleton
         $extend = implode('^_^', func_get_args());
         if (!isset(self::$instances[$cls.$extend]))
         {
-            $rcStatic=new ReflectionClass($cls);
+            $rcStatic=new \ReflectionClass($cls);
             self::$instances[$cls.$extend] = $rcStatic->newInstanceArgs(func_get_args());
         }
         return self::$instances[$cls.$extend];

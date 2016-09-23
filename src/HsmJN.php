@@ -7,7 +7,8 @@
  */
 namespace EasyLib;
 class HsmJN extends Singleton {
-    private $this->socket = null;
+
+    private $socket = null;
 
     public function __construct($ip, $port)
     {
@@ -33,7 +34,7 @@ class HsmJN extends Singleton {
      * @return array    多个密文数据段组成的数组，成员为string类型
      * @throws Exception
      */
-    public static function blocksEncrypt(
+    public function blocksEncrypt(
             $encFlag,
             $keyType,
             $key,
@@ -125,7 +126,7 @@ class HsmJN extends Singleton {
      * @return array    多个明文数据段组成的数组，成员为string类型
      * @throws Exception
      */
-     public static function blocksDecrypt(
+     public function blocksDecrypt(
             $encFlag,
             $keyType,
             $key,
@@ -214,7 +215,7 @@ class HsmJN extends Singleton {
         return $ret;
     }
     
-    public static function s3Encrypt(
+    public function s3Encrypt(
             $encFlag,
             $keyType,
             $key,
@@ -302,7 +303,7 @@ class HsmJN extends Singleton {
         }
     }
     
-    public static function getHsmInfo()
+    public function getHsmInfo()
     {
         $str = "NC";
         $len1 = strlen($str);
