@@ -1,15 +1,8 @@
 <?php
-
-//use Exception;
-
-/**
- * 指令报文封装
- */
 namespace EasyLib;
-class HsmJN extends Singleton {
-
+class HsmJN extends Singleton 
+{
     private $socket = null;
-
     public function __construct($ip, $port)
     {
         $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
