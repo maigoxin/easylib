@@ -29,6 +29,7 @@ class ApiView
             'errno' => $data[0],
             'errmsg' => call_user_func_array('sprintf', $args),
         ];
+        Log::error($message['errmsg']);
         return $this->render($message, $data[2]);
     }
 

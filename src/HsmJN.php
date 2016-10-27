@@ -40,12 +40,21 @@ class HsmJN extends Singleton
     {
         $str = "SW0";
         if(is_int($encFlag) && $encFlag >= 0){ $str = $str.sprintf("%02X", $encFlag); }
-        else{ die("Invalid argument \$encFlag=$encFlag"); }
+        else{ 
+            Log::error("Invalid argument \$encFlag=$encFlag"); 
+            return false;
+        }
         if(is_int($keyType) & $keyType >= 0){ $str = $str.sprintf("%03X", $keyType); }
-        else{ die("Invalid argument \$keyType=$keyType"); }
+        else{ 
+            Log::error("Invalid argument \$keyType=$keyType"); 
+            return false;
+        }
         if(is_int($key) && $key > 0 && $key <= 9999){ $str = $str.sprintf("K%04d", $key); }
         else if(!is_null($key) && is_string($key) && (strlen($key) == 16 || (strlen($key)-1)%32 == 0)){ $str = $str.$key; }
-        else{ die("Invalid argument \$key=$key"); }
+        else{ 
+            Log::error("Invalid argument \$key=$key"); 
+            return false;
+        }
         if(!is_null($deriveFactor) && is_string($deriveFactor)){
             $str = $str.sprintf("%02X", strlen($deriveFactor)/32);
             $str = $str.$deriveFactor;
@@ -54,7 +63,8 @@ class HsmJN extends Singleton
             $str = $str."00";
         }
         else{
-            die("Invalid argument \$deriveFactor=$deriveFactor");
+            Log::error("Invalid argument \$deriveFactor=$deriveFactor");
+            return false;
         }
         if(is_int($sessionKeyFlag) && $sessionKeyFlag >= 0){
             $str = $str.sprintf("%02X", $sessionKeyFlag);
@@ -66,7 +76,8 @@ class HsmJN extends Singleton
             $str = $str.sprintf("%02X", $paddingFlag);
         }
         else {
-            die("Invalid argument \$paddingFlag=$paddingFlag");
+            Log::error("Invalid argument \$paddingFlag=$paddingFlag");
+            return false;
         }
         
         if(!is_null($dataArray) && is_array($dataArray)){
@@ -85,12 +96,14 @@ class HsmJN extends Singleton
         socket_write($this->socket, $str, strlen($str));
         $rsp=socket_read($this->socket,2);
         if($rsp == FALSE){
-            die(socket_strerror(socket_last_error()));
+            Log::error(socket_strerror(socket_last_error()));
+            return false;
         }
         $len = Bytes::bytesToShortBigEnd(Bytes::getBytes($rsp), 0);
         $rsp = socket_read($this->socket, $len);
         if($rsp == FALSE){
-            die(socket_strerror(socket_last_error()));
+            Log::error(socket_strerror(socket_last_error()));
+            return false;
         }
         
         $ret = array();
@@ -135,13 +148,15 @@ class HsmJN extends Singleton
             $str = $str.sprintf("%02X", $encFlag);
         }
         else{
-            throw new Exception("Invalid argument \$encFlag=$encFlag");
+            Log::error("Invalid argument \$encFlag=$encFlag");
+            return false;
         }
         if(is_int($keyType) & $keyType >= 0){
             $str = $str.sprintf("%03X", $keyType);
         }
         else{
-            throw new Exception("Invalid argument \$keyType=$keyType");
+            Log::error("Invalid argument \$keyType=$keyType");
+            return false;
         }
         if(is_int($key) && $key > 0 && $key <= 9999){
             $str = $str.sprintf("K%04d", $key); 
@@ -150,7 +165,8 @@ class HsmJN extends Singleton
             $str = $str.$key;
         }
         else{
-            throw new Exception("Invalid argument \$key=$key"); 
+            Log::error("Invalid argument \$key=$key"); 
+            return false;
         }
         if(!is_null($deriveFactor) && is_string($deriveFactor)){
             $str = $str.sprintf("%02X", strlen($deriveFactor)/32);
@@ -160,7 +176,8 @@ class HsmJN extends Singleton
             $str = $str."00";
         }
         else{
-            throw new Exception("Invalid argument \$deriveFactor=$deriveFactor");
+            Log::error("Invalid argument \$deriveFactor=$deriveFactor");
+            return false;
         }
         if(is_int($sessionKeyFlag) && $sessionKeyFlag >= 0){
             $str = $str.sprintf("%02X", $sessionKeyFlag);
@@ -172,7 +189,8 @@ class HsmJN extends Singleton
             $str = $str.sprintf("%02X", $paddingFlag);
         }
         else {
-            throw new Exception("Invalid argument \$paddingFlag=$paddingFlag");
+            Log::error("Invalid argument \$paddingFlag=$paddingFlag");
+            return false;
         }
             if(!is_null($dataArray) && is_array($dataArray)){
             $str = $str.sprintf("%02X", count($dataArray));
@@ -190,12 +208,14 @@ class HsmJN extends Singleton
         socket_write($this->socket, $str, strlen($str));
         $rsp=socket_read($this->socket,2);
         if($rsp == FALSE){
-            throw new Exception(socket_strerror());
+            Log::error(socket_strerror());
+            return false;
         }
         $len = Bytes::bytesToShortBigEnd(Bytes::getBytes($rsp), 0);
         $rsp = socket_read($this->socket, $len);
         if($rsp == FALSE){
-            throw new Exception(socket_strerror());
+            Log::error(socket_strerror());
+            return false;
         }
         $ret = array();
         $offset = 4;
