@@ -1,6 +1,6 @@
 <?php
 require_once KS3_API_PATH.DIRECTORY_SEPARATOR."exceptions".DIRECTORY_SEPARATOR."Exceptions.php";
-class Logger{
+class Ks3Logger{
 	function info($msg){
 		$this->log("INFO",$msg);
 	}

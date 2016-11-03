@@ -71,7 +71,7 @@ class Ks3Client{
 		$this->endpoint = $endpoint;
 
 		$this->signers = array();
-		$this->log = new Logger();
+		$this->log = new Ks3Logger();
 	}
 	/**
 	方法列表:(具体使用请参考readme.md)
