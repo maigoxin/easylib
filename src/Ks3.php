@@ -21,7 +21,7 @@ class Ks3 extends Singleton
         $this->client = new \Ks3Client($ak, $sk, $endPoint);
     }
 
-    public function uploadFile($bucket, $path, $filePath, $acl = 'public-read')
+    public function uploadFile($bucket, $path, $filePath, $acl = 'public-read', $contentType = 'application/octet-stream')
     {
         if (!is_file($filePath)) {
             return false;
@@ -34,14 +34,17 @@ class Ks3 extends Singleton
                 'content' => $filePath,
                 'seek_position' => 0
             ],
-            'public-read' => $acl,
+            'ACL' => $acl,
+            'ObjectMeta' => [
+                'Content-Type' => $contentType
+            ],
         ];
 
         $res = $this->client->putObjectByFile($args);
         return isset($res['ETag']) ? $res['ETag'] : false;
     }
 
-    public function uploadDir($bucket, $path, $dirPath, $acl = 'public-read')
+    public function uploadDir($bucket, $path, $dirPath, $acl = 'public-read', $contentType = 'application/octet-stream')
     {
         if (!is_dir($dirPath)) {
             return false;
