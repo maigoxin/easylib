@@ -20,7 +20,7 @@ abstract class BaseCurl extends Singleton
     protected $client = null;
     protected $stack = null;
 
-    protected function __construct()
+    public function __construct()
     {
         //$this->stack = new HandlerStack();
         //$this->stack->setHandler(new CurlHandler());
