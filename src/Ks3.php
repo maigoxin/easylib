@@ -82,6 +82,16 @@ class Ks3 extends Singleton
         return $this->client->getObject($args);
     }
 
+    public function exists($bucket, $path)
+    {
+        $args = [
+            'Bucket' => $bucket, 
+            'Key' => $path
+        ];
+
+        return $this->objectExists($args);
+    }
+
     public function goDir($dirPath, array &$box)
     {
         if (is_dir($dirPath)) {
