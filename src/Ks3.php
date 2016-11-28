@@ -59,6 +59,29 @@ class Ks3 extends Singleton
         return true;
     }
 
+    public function getTempObjectUrl($bucket, $path, $expire = 60)
+    {
+        $args = [
+            'Bucket' => $bucket,
+            'Key' => $path,
+            'Options' => [
+                'Expires' => $expire,
+            ],
+        ];
+
+        return $this->client->generatePresignedUrl($args);
+    }
+
+    public function getObject($bucket, $path)
+    {
+        $args = [
+            'Bucket' => $bucket, 
+            'Key' => $path
+        ];
+
+        return $this->client->getObject($args);
+    }
+
     public function goDir($dirPath, array &$box)
     {
         if (is_dir($dirPath)) {
