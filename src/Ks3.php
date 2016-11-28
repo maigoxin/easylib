@@ -44,6 +44,22 @@ class Ks3 extends Singleton
         return isset($res['ETag']) ? $res['ETag'] : false;
     }
 
+    public function uploadContent($bucket, $path, $content, $acl = 'public-read', $contentType = 'application/octet-stream')
+    {
+        $args = [
+            'Bucket' => $bucket,
+            'Key' => $path,
+            'Content' => $content,
+            'ACL' => $acl,
+            'ObjectMeta' => [
+                'Content-Type' => $contentType
+            ],
+        ];
+
+        $res = $this->client->putObjectByContent($args);
+        return isset($res['ETag']) ? $res['ETag'] : false;
+    }
+
     public function uploadDir($bucket, $path, $dirPath, $acl = 'public-read', $contentType = 'application/octet-stream')
     {
         if (!is_dir($dirPath)) {
