@@ -89,7 +89,7 @@ class Ks3 extends Singleton
             'Key' => $path
         ];
 
-        return $this->objectExists($args);
+        return $this->client->objectExists($args);
     }
 
     public function goDir($dirPath, array &$box)
