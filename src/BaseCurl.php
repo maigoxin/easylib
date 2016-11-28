@@ -11,6 +11,7 @@ use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Psr7\Uri;
 
 abstract class BaseCurl extends Singleton
 {
