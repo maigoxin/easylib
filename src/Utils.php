@@ -72,7 +72,7 @@ class Utils
 
     public static function fileContentType($file) {
         $info = pathinfo($file);
-        switch (strtolower(trim($info['extension'])) {
+        switch (strtolower(trim($info['extension']))) {
             case 'css':
                 return 'text/css';
             case 'js':
