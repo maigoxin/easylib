@@ -69,4 +69,26 @@ class Utils
         }
         return $str;
     }
+
+    public static function fileContentType($file) {
+        $info = pathinfo($file);
+        switch (strtolower(trim($info['extension'])) {
+            case 'css':
+                return 'text/css';
+            case 'js':
+                return 'text/javascript';
+            case 'html':
+                return 'text/html';
+            case 'htm':
+                return 'text/htm';
+            case 'png':
+                return 'image/png';
+            case 'jpeg':
+                return 'image/jpeg';
+            case 'jpg':
+                return 'image/jpg';
+            default:
+                return 'application/octet-stream';
+        }
+    }
 }
