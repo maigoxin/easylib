@@ -70,7 +70,7 @@ class Ks3 extends Singleton
         $this->goDir($dirPath, $box);
         $prefixLen = strlen($dirPath);
         foreach ($box as $file) {
-            $this->uploadFile($bucket, $path . substr($file, $prefixLen), $file, $acl);
+            $this->uploadFile($bucket, $path . substr($file, $prefixLen), $file, $acl, Utils::fileContentType($file));
         }
         return true;
     }
