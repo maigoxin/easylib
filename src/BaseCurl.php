@@ -102,7 +102,7 @@ abstract class BaseCurl extends Singleton
                         return $replace[$key];
                     };
                     $uri = preg_replace_callback('/%7B.*?%7D/', $func2, $uri);
-                    $request = $request->withUri(new Uri($uri));
+                    $request = $request->withUri(new Uri($uri), true);
                 }
                 return $handler($request, $options);
             };
