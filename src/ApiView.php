@@ -35,6 +35,7 @@ class ApiView
 
     public function render($message, $httpCode = 200)
     {
+        Log::Info('request', 'response:' . json_encode($message));
         return $this->response
             ->withHeader('Content-Type', 'application/json;charset=UTF-8')
             ->withStatus($httpCode)
