@@ -91,4 +91,25 @@ class Utils
                 return 'application/octet-stream';
         }
     }
+
+    public static function xmlEncode($data)
+    {
+        $result = "";
+        foreach ($data as $key=>$value) {
+            if (is_numeric($key)) {
+                $left = '<Item>';
+                $right = '</Item>';
+            }else {
+                $left = "<$key>";
+                $right = "</$key>";
+            }
+
+            if (is_array($value)) {
+                $result .= $left.self::xmlEncode($value).$right;
+            }else {
+                $result .= "$left$value$right";
+            }
+        }
+        return $result;
+    }
 }
