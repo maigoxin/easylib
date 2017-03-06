@@ -36,10 +36,17 @@ class ApiView
     public function render($message, $httpCode = 200)
     {
         Log::Info('request', 'response:' . json_encode($message));
-        return $this->response
-            ->withHeader('Content-Type', 'application/json;charset=UTF-8')
-            ->withStatus($httpCode)
-            ->write(json_encode($message));
+        if (isset($_SERVER['HTTP_ACCEPT']) && strtolower($_SERVER['HTTP_ACCEPT']) == 'application/javascript' && isset($_GET['callback'])) {
+            return $this->response
+                ->withHeader('Content-Type', 'application/javascript;charset=UTF-8')
+                ->withStatus($httpCode)
+                ->write($_GET['callback'].'('.json_encode($message).')');
+        }else {
+            return $this->response
+                ->withHeader('Content-Type', 'application/json;charset=UTF-8')
+                ->withStatus($httpCode)
+                ->write(json_encode($message));
+        }
     }
 
     public function __construct($response) 
