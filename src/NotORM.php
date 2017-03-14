@@ -24,7 +24,7 @@ abstract class NotORM_Abstract {
 	protected $debug = false;
 	protected $debugTimer;
 	protected $freeze = false;
-	protected $rowClass = 'NotORM_Row';
+	protected $rowClass = '\EasyLib\NotORM_Row';
 	protected $jsonAsArray = false;
 	
 	protected function access($key, $delete = false) {
