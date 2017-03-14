@@ -48,9 +48,9 @@ class NotORM extends NotORM_Abstract {
 	* @param NotORM_Structure or null for new NotORM_Structure_Convention
 	* @param NotORM_Cache or null for no cache
 	*/
-	function __construct(PDO $connection, NotORM_Structure $structure = null, NotORM_Cache $cache = null) {
+	function __construct(\PDO $connection, NotORM_Structure $structure = null, NotORM_Cache $cache = null) {
 		$this->connection = $connection;
-		$this->driver = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+		$this->driver = $connection->getAttribute(\PDO::ATTR_DRIVER_NAME);
 		if (!isset($structure)) {
 			$structure = new NotORM_Structure_Convention;
 		}

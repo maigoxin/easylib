@@ -1,4 +1,5 @@
 <?php
+namespace EasyLib;
 
 /** Loading and saving data, it's only cache so load() does not need to block until save()
 */

@@ -1,10 +1,11 @@
 <?php
+namespace EasyLib;
 
 /** Filtered table representation
 * @method NotORM_Result and(mixed $condition, mixed $parameters = array()) Add AND condition
 * @method NotORM_Result or(mixed $condition, mixed $parameters = array()) Add OR condition
 */
-class NotORM_Result extends NotORM_Abstract implements Iterator, ArrayAccess, Countable, JsonSerializable {
+class NotORM_Result extends NotORM_Abstract implements \Iterator, \ArrayAccess, \Countable, \JsonSerializable {
 	protected $single;
 	protected $select = array(), $conditions = array(), $where = array(), $parameters = array(), $order = array(), $limit = null, $offset = null, $group = "", $having = "", $lock = null;
 	protected $union = array(), $unionOrder = array(), $unionLimit = null, $unionOffset = null;

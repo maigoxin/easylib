@@ -1,4 +1,5 @@
 <?php
+namespace EasyLib;
 
 /** Representation of filtered table grouped by some column
 */

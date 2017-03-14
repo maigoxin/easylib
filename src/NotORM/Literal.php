@@ -1,4 +1,5 @@
 <?php
+namespace EasyLib;
 
 /** SQL literal value
 */

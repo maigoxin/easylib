@@ -1,4 +1,5 @@
 <?php
+namespace EasyLib;
 
 /** Information about tables and columns structure
 */
