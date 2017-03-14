@@ -17,7 +17,7 @@
     "require": {
         "php": ">=5.5",
         "maigoxin/log4php":"v0.01",
-        "maigoxin/notorm":"v0.02",
+        "maigoxin/notorm":"dev-master",
         "oscarotero/psr7-middlewares":"~v3.16",
         "guzzlehttp/guzzle":"~6.2"
     },
