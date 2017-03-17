@@ -130,16 +130,22 @@ abstract class BaseCurl extends Singleton
         return function(callable $handler) {
             return function(RequestInterface $request, array $options)
             use ($handler) {
-                $promise = $handler($request, $options);
                 $spent = new RunTimeUtil();
                 $spent->start();
+                $promise = $handler($request, $options);
+                if (get_class($promise) == 'GuzzleHttp\Promise\RejectedPromise') {
+                    $cost = $spent->spent();
+                    $req = $this->logRequest($request);
+                    $log = array_merge($req, ['httpCode#0', 'reasonPhrase#connectFail', 'response#', 'cost#' . $cost]);
+                    Log::info('curl', implode('|', $log));
+                }
                 return $promise->then(
                     function (ResponseInterface $response) use ($request, $spent) {
                         $cost = $spent->spent();
                         $req = $this->logRequest($request);
                         $res = $this->logResponse($response);
                         $log = array_merge($req, $res, ['cost#' . $cost]);
-                        Log::info('curl', implode('#|', $log));
+                        Log::info('curl', implode('|', $log));
                         return $response;
                     }   
                 );  
@@ -175,7 +181,7 @@ abstract class BaseCurl extends Singleton
     {
         return [
             'httpCode#' . $response->getStatusCode(),
-            'reasonPhrase' . $response->getReasonPhrase(),
+            'reasonPhrase#' . $response->getReasonPhrase(),
             'response#' . (string)$response->getBody(),
         ];
     }
