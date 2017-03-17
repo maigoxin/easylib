@@ -9,6 +9,8 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Uri;
@@ -23,8 +25,6 @@ abstract class BaseCurl extends Singleton
 
     public function __construct()
     {
-        //$this->stack = new HandlerStack();
-        //$this->stack->setHandler(new CurlHandler());
         $this->stack = HandlerStack::create();
         $this->stack->push($this->replaceUri());
         $this->stack->push($this->logRpc());
@@ -50,13 +50,29 @@ abstract class BaseCurl extends Singleton
         $info['config'] = $config;
 
         $method = $info['method'];
-        try {
-            $response = $this->client->request($method, $info['url'], $info['config']);
-            $result = (string)$response->getBody();
-            $httpCode = $response->getStatusCode();
-        }catch(ClientException $exception) {
-            $result = (string)$exception->getResponse()->getBody();
-            $httpCode = $exception->getResponse()->getStatusCode();
+        $info['config']['headers']['X-Requested-With'] = REQUEST_ID;
+        $try = 0;
+        while ($try++ < 3) {
+            try {
+                $response = $this->client->request($method, $info['url'], $info['config']);
+                $result = (string)$response->getBody();
+                $httpCode = $response->getStatusCode();
+                break;
+            }catch(ClientException $exception) {
+                //4xx错误 不需要重试
+                $result = (string)$exception->getResponse()->getBody();
+                $httpCode = $exception->getResponse()->getStatusCode();
+                break;
+            }catch(ServerException $exception) {
+                //5xx错误 需要重试
+                $result = (string)$exception->getResponse()->getBody();
+                $httpCode = $exception->getResponse()->getStatusCode();
+            }catch(ConnectException $exception) {
+                //连接问题，例如超时等。此类问题目前需要重试，期望服务端对于幂等性有要求
+                //$exception->getMessage()
+                $result = null;
+                $httpCode = 500;
+            }
         }
 
         return [$result, $httpCode];
