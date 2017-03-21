@@ -169,7 +169,7 @@ class NotORM_Result extends NotORM_Abstract implements \Iterator, \ArrayAccess, 
 		}
         $endTime = microtime(true);
         $log[] = 'errorInfo#'.implode('^_^', $this->notORM->connection->errorInfo());
-        $log[] = 'cost#'.($endTime - $startTime).'s';
+        $log[] = 'cost#'.round(($endTime - $startTime) * 1000, 2);
         Log::info('db', implode('|', $log));
 
 		if ($this->notORM->debugTimer) {
