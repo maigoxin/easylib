@@ -50,7 +50,7 @@ abstract class BaseCurl extends Singleton
         $info['config'] = $config;
 
         $method = $info['method'];
-        $info['config']['headers']['X-Requested-With'] = REQUEST_ID;
+        $info['config']['headers']['X-Request-ID'] = REQUEST_ID;
         $try = 0;
         while ($try++ < 3) {
             try {
