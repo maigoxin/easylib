@@ -11,6 +11,7 @@ use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Uri;
@@ -72,6 +73,9 @@ abstract class BaseCurl extends Singleton
                 //$exception->getMessage()
                 $result = null;
                 $httpCode = 500;
+            }catch(RequestException $exception) {
+                $result = (string)$exception->getResponse()->getBody();
+                $httpCode = $exception->getResponse()->getStatusCode();
             }
         }
 
