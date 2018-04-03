@@ -11,7 +11,11 @@ class RedisClient
     {
         $this->redis_ = new \Redis();
         $this->redis_->connect($config['host'], $config['port'], $config['timeout']);
-
+        
+        if (isset($config['auth'])) {
+            $this->redis_->auth($config['auth']);
+        }
+        
         if (isset($config['db'])) {
             $this->redis_->select($config['db']);
         }
